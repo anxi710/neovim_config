@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -247,7 +247,19 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+
+  -- 'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+  {
+    'nmac427/guess-indent.nvim',
+    event = 'BufReadPre',
+    config = function()
+      require('guess-indent').setup {
+        auto_cmd = true, -- 默认就是 true
+        filetype_exclude = { 'netrw', 'tutor' },
+        buftype_exclude = { 'help', 'nofile', 'terminal' },
+      }
+    end,
+  },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -1010,7 +1022,23 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+  rocks = {
+    -- enabled = false,
+    -- hererocks = false, -- 禁用 hererocks 支持，保留全局 luarocks
+  },
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+vim.opt.ttimeout = true
+vim.opt.ttimeoutlen = 20
+
+-- 指定系统 python 路径
+vim.g.python3_host_prog = '/usr/bin/python3'
+
+vim.g.perl_host_prog = '/usr/bin/perl'
+
+-- vim.opt.tabstop = 4
+-- vim.opt.shiftwidth = 4
+-- vim.opt.expandtab = true
