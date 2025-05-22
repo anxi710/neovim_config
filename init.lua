@@ -114,7 +114,7 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
+vim.schedule(function() -- 在 Insert mode 下，无法复制！
   vim.o.clipboard = 'unnamedplus'
 end)
 
@@ -1031,14 +1031,7 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
-vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 20
-
--- 指定系统 python 路径
-vim.g.python3_host_prog = '/usr/bin/python3'
-
-vim.g.perl_host_prog = '/usr/bin/perl'
-
--- vim.opt.tabstop = 4
--- vim.opt.shiftwidth = 4
--- vim.opt.expandtab = true
+-- 加载自定义设置
+pcall(require, 'custom.plugins')
+pcall(require, 'custom.keymaps')
+pcall(require, 'custom.options')
