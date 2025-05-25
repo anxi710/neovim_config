@@ -26,8 +26,31 @@ return {
           severity = vim.diagnostic.severity.WARN,
         }),
       }
+      lint.linters.clangtidy = {
+        name = 'clang-tidy',
+        cmd = 'clang-tidy',
+        args = {
+          function()
+            return vim.fn.expand '%:p'
+          end,
+        },
+        stdin = false,
+        stream = 'stdout',
+        ignore_exitcode = true,
+        parser = require('lint.parser').from_errorformat('%f:%l:%c: %t%*[^:]: %m', {
+          source = 'clang-tidy',
+          severity = {
+            ['error'] = vim.diagnostic.severity.ERROR,
+            ['warning'] = vim.diagnostic.severity.WARN,
+            ['note'] = vim.diagnostic.severity.INFO,
+          },
+        }),
+      }
+
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
+        c = { 'clangtidy' },
+        cpp = { 'clangtidy' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
