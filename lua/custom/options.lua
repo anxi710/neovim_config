@@ -25,3 +25,4 @@ vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
   end,
 })
 
+vim.g.EditorConfig_exclude_patterns = { 'health://*', 'term://*' }
