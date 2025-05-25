@@ -5,6 +5,27 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local lint = require 'lint'
+
+      lint.linters.markdownlint = {
+        name = 'markdownlint',
+        cmd = 'markdownlint',
+        stdin = true,
+        args = {
+          '--stdin',
+          '--stdin-filename',
+          function()
+            return vim.fn.expand '%:p'
+          end,
+          '--config',
+          vim.fn.expand '~/.markdownlint.json', -- 自定义 markdownlint 配置路径
+        },
+        stream = 'stdout',
+        ignore_exitcode = true,
+        parser = require('lint.parser').from_errorformat('%f:%l %m', {
+          source = 'markdownlint',
+          severity = vim.diagnostic.severity.WARN,
+        }),
+      }
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
       }
