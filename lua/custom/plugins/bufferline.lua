@@ -23,6 +23,14 @@ return {
             separator = true,
           },
         },
+        --
+        custom_filter = function(bufnr)
+          local name = vim.api.nvim_buf_get_name(bufnr)
+          if name == '' then
+            return false
+          end
+          return true
+        end,
       },
     }
   end,
