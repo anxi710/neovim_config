@@ -1,8 +1,9 @@
 -- lua/custom/plugins/fcitx5.lua
-return { -- 输入法自动切换（使用自定义的 fcitx5 控制器，只在第一次进入 insert mode 下会卡顿）
+return {
+  -- 输入法自动切换（使用自定义的 fcitx5 控制器，只在第一次进入 insert mode 下会卡顿）
   'pysan3/fcitx5.nvim',
   cond = vim.fn.executable 'fcitx5-remote' == 1,
-  event = { 'InsertEnter', 'InsertLeave' }, -- or ModeChanged
+  event = { 'InsertEnter', 'InsertLeave' },
   config = function()
     require('fcitx5').setup {
       msg = nil, -- string | nil: printed when startup is completed
@@ -17,7 +18,7 @@ return { -- 输入法自动切换（使用自定义的 fcitx5 控制器，只在
         lang = 'keyboard-us',
       },
       remember_prior = false, -- boolean: if true, it remembers the mode on exit and restore it when entering the mode again.
-      --                                 if false, uses what was set in config.
+      --          if false, uses what was set in config.
       define_autocmd = false, -- boolean: if true, defines autocmd at `ModeChanged` to switch fcitx5 mode.
       autostart_fcitx5 = false, -- boolean: if true, autostarts `fcitx5` when it is not running.
       log = 'warn', -- string: log level (default: warn)
