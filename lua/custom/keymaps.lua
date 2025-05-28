@@ -16,6 +16,9 @@ local function close_buffer_safely()
     }, function(choice)
       if choice == 'Yes' then
         vim.cmd 'qa'
+      else
+        vim.cmd 'bd'
+        vim.cmd 'Yazi'
       end
     end)
     return -- 阻止继续执行
