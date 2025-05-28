@@ -1,5 +1,5 @@
-
-return { -- Autocompletion
+return {
+  -- Autocompletion
   'saghen/blink.cmp',
   event = 'VimEnter',
   version = '1.*',
@@ -97,3 +97,4 @@ return { -- Autocompletion
     signature = { enabled = true },
   },
 }
+
