@@ -1,5 +1,6 @@
 -- lua/custom/plugins/lazygit.lua
 return {
+  -- Neovim 中的 LazyGit 插件
   'kdheepak/lazygit.nvim',
   lazy = true,
   cmd = {

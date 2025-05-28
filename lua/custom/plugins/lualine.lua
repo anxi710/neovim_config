@@ -1,5 +1,6 @@
 -- lua/custom/plugins/lualine.lua
 return {
+  -- 美化底部状态栏
   'nvim-lualine/lualine.nvim',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   event = 'VeryLazy',
@@ -19,12 +20,7 @@ return {
           'diff',
           { 'diagnostics', sources = { 'nvim_lsp' }, symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' } },
         },
-        lualine_c = {
-          'filename',
-          function()
-            return require('custom.fcitx5-controller').get_current_im()
-          end,
-        },
+        lualine_c = { 'filename' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
