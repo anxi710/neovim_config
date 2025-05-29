@@ -153,13 +153,17 @@ function M.setup()
   tab_keymaps()
   buffer_keymaps()
   -- 取消连按两次 <Esc> 键跳回主 buffer
-  vim.keymap.set('t', '<Esc><Esc>', '<Esc>', { noremap = true })
+  map('t', '<Esc><Esc>', '<Esc>', { noremap = true })
   -- 在 normal 模式下可以通过 ctrl+a，选中所有内容
-  vim.keymap.set('n', '<c-a>', function()
+  map('n', '<c-a>', function()
     vim.cmd 'normal! ggVG' -- 直接绑定 'gg0vG' 效果不是很稳定，所以使用命令函数的方式执行。这里 normal! 是强制执行正常模式
   end, { noremap = true })
   -- 使用 W 跳转到当前 word 的最后一个字母
-  vim.keymap.set('n', 'W', 'e', { noremap = true })
+  map('n', 'W', 'e', { noremap = true })
+  -- 使用 <tab> 来切换折叠状态
+  map('n', '<tab>', 'za', { noremap = true })
+  -- 显示诊断信息
+  map('n', '<leader>dd', vim.diagnostic.open_float, { desc = '显示诊断信息' })
 end
 
 return M
