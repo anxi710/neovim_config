@@ -2,7 +2,10 @@
 return {
   -- 美化底部状态栏
   'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+    'stevearc/aerial.nvim',
+  },
   event = 'VeryLazy',
   config = function()
     require('lualine').setup {
@@ -20,7 +23,10 @@ return {
           'diff',
           { 'diagnostics', sources = { 'nvim_lsp' }, symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' } },
         },
-        lualine_c = { 'filename' },
+        lualine_c = {
+          { 'filename' },
+          { 'aerial' },
+        },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
