@@ -60,8 +60,8 @@ return {
         enable_character_fade = true,
       },
       indent = {
-        indent_size = 3,
-        padding = 2, -- 左侧额外的 padding
+        indent_size = 2,
+        padding = 0, -- 左侧额外的 padding
         -- indent guides
         with_markers = true,
         indent_marker = '│',
