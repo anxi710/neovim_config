@@ -5,60 +5,48 @@ local function map(...)
   vim.keymap.set(...)
 end
 
--- 智能关闭 buffer（并在必要时退出 Neovim）
+-- 同步确认函数（Yes/No）
+local function confirm_sync(prompt)
+  local answer = vim.fn.input(prompt .. ' (y/N): ')
+  return answer:lower() == 'y'
+end
+
+-- 智能关闭 buffer（在必要时退出 Neovim）
 local function close_buffer_safely()
-  local bufnr = vim.api.nvim_get_current_buf()
   local listed_buffers = vim.fn.getbufinfo { buflisted = 1 }
 
   if #listed_buffers <= 1 then
-    vim.ui.select({ 'Yes', 'No' }, {
-      prompt = 'Quit Neovim?',
-    }, function(choice)
-      if choice == 'Yes' then
-        vim.cmd 'qa'
-      else
-        vim.cmd 'bd'
-        vim.cmd 'Yazi'
-      end
-    end)
-    return -- 阻止继续执行
-  end
-
-  local windows = vim.fn.win_findbuf(bufnr)
-
-  -- 只有一个窗口在显示该 buffer，我们可以尝试关闭窗口
-  if #windows <= 1 then
-    -- 如果这是最后一个窗口，就不要调用 close，直接删 buffer
-    if #vim.api.nvim_list_wins() <= 1 then
-      vim.cmd 'bd'
+    if confirm_sync 'Quit Neovim?' then
+      vim.cmd 'qa'
     else
-      vim.cmd 'close' -- 安全关闭窗口
+      vim.cmd 'bd'
+      vim.cmd 'Yazi'
     end
-  else
-    vim.cmd 'bd'
+    return
   end
+
+  vim.cmd 'bd' -- 使用 bd 命令会同时关闭 buffer 对应窗口
 end
 
--- 智能关闭 window（并在必要时提示是否关闭 buffer）
+-- 智能关闭 window（）
 local function close_window_safely()
   local bufnr = vim.api.nvim_get_current_buf()
   local windows = vim.fn.win_findbuf(bufnr)
   local win_count = #vim.api.nvim_list_wins()
 
+  -- 如果当前关闭的 window 中显示的 buffer 只有这一个显示窗口
   if #windows <= 1 then
-    vim.ui.select({ 'Yes', 'No' }, {
-      prompt = 'Close this window?',
-    }, function(choice)
-      if choice == 'Yes' then
-        if win_count > 1 then
-          vim.cmd 'close'
-        else
-          vim.cmd 'bd'
-        end
+    if confirm_sync 'Close this window?' then
+      -- 如果当前只有一个窗口则不能通过 close 来关闭
+      -- 而是需要使用 bd 来关闭当前窗口对应的 buffer 从而关闭当前窗口
+      if win_count > 1 then
+        vim.cmd 'close'
+      else
+        close_buffer_safely()
       end
-    end)
+    end
+    return
   else
-    -- buffer 仍在其他窗口中显示，可以直接关闭当前窗口
     vim.cmd 'close'
   end
 end
