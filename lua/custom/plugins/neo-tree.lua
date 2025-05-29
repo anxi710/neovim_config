@@ -32,23 +32,6 @@ return {
     },
   },
   lazy = false, -- neo-tree will lazily load itself
-  init = function()
-    -- FIX: Use autocmd for lazy-loading Neo-tree instead of directly requiring it,
-    -- because cwd is not set up properly.
-    vim.api.nvim_create_autocmd('VimEnter', {
-      group = vim.api.nvim_create_augroup('NeoTreeStartFile', { clear = true }),
-      desc = 'Start Neo-tree with file',
-      once = true,
-      callback = function()
-        local arg = vim.fn.argv(0)
-        local stats = arg and vim.uv.fs_stat(arg)
-        -- 仅在不是目录时加载 neo-tree
-        if not stats or stats.type ~= 'directory' then
-          require 'neo-tree'
-        end
-      end,
-    })
-  end,
   ---@module "neo-tree"
   ---@type neotree.Config?
   opts = {
