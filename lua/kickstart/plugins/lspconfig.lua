@@ -209,7 +209,24 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          cmd = { 'clangd', '--clang-tidy', '--header-insertion=never' },
+          -- 你也可以在这里加一些 clangd 额外参数，比如：
+          -- cmd = { "clangd", "--clang-tidy", "--completion-style=detailed", "--header-insertion=never" },
+
+          -- on_attach 如果想自定义，还可以定义一个函数
+          -- 但 LspAttach autocommand 已经做了大部分绑定，不一定要重复
+          -- on_attach = function(client, bufnr)
+          --   -- 自定义逻辑
+          -- end,
+
+          init_opitons = {
+            clangdFilesStatus = true,
+          },
+          flags = {
+            debounce_text_changes = 200, -- 延迟分析代码
+          },
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -236,6 +253,11 @@ return {
             },
           },
         },
+      }
+      require('lspconfig').clangd.setup {
+        on_attach = function(client, bufnr)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
       }
 
       -- Ensure the servers and tools above are installed
