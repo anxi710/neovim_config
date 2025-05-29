@@ -101,22 +101,22 @@ return {
       },
       name = {
         trailing_slash = false,
-        use_git_status_colors = true,
-        highlight = "NeoTreeFileName",
+        use_git_status_colors = false,
+        highlight = 'NeoTreeFileName',
       },
       git_status = {
         symbols = {
           -- Change type
-          added = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-          modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
-          deleted = "✖", -- this can only be used in the git_status source
-          renamed = "󰁕", -- this can only be used in the git_status source
+          added = '✚', -- or "✚", but this is redundant info if you use git_status_colors on the name
+          modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
+          deleted = '✖', -- this can only be used in the git_status source
+          renamed = '󰁕', -- this can only be used in the git_status source
           -- Status type
-          untracked = "",
-          ignored = "",
-          unstaged = "󰄱",
-          staged = "",
-          conflict = "",
+          untracked = '',
+          ignored = '',
+          unstaged = '󰄱',
+          staged = '',
+          conflict = '',
         },
       },
       -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
