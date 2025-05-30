@@ -26,6 +26,7 @@ return {
         lualine_c = {
           { 'filename' },
           { 'aerial' },
+          { require('recorder').recordingStatus },
         },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
