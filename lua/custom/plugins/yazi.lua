@@ -1,26 +1,28 @@
 -- lua/custom/plugins/yazi.lua
 return {
+  -- Yazi 是一个功能强大的 TUI 文件资源管理器，替代 neo-tree 作为主文件管理器
   ---@type LazySpec
   'mikavilpas/yazi.nvim',
-  event = 'VeryLazy',
+  event = 'VeryLazy', -- 注意：这意味着 Yazi 必须主动加载
   dependencies = {
     -- check the installation instructions at
     -- https://github.com/folke/snacks.nvim
     'folke/snacks.nvim',
+    -- 'MagicDuck/grug-far.nvim',
   },
   keys = {
     -- 👇 in this section, choose your own keymappings!
     {
-      '<leader>-',
-      mode = { 'n', 'v' },
+      '<leader>e',
+      mode = { 'n' },
       '<cmd>Yazi<cr>',
-      desc = 'Open yazi at the current file',
+      desc = '[E]xplorer (Open yazi at the current file)',
     },
     {
       -- open in the current working directory
       '<leader>cw',
       '<cmd>Yazi cwd<cr>',
-      desc = "Open the file manager in nvim's working directory",
+      desc = 'Open yazi in the [c]urrent [w]orking directory',
     },
     {
       '<c-up>',
@@ -50,16 +52,52 @@ return {
     -- - you can opt out of all keymaps by setting `keymaps = false`
     keymaps = {
       show_help = '<f1>',
-      open_file_in_vertical_split = '<c-v>',
-      open_file_in_horizontal_split = '<c-x>',
-      open_file_in_tab = '<c-t>',
-      grep_in_directory = '<c-s>',
-      replace_in_directory = '<c-g>',
-      cycle_open_buffers = '<tab>',
+      grep_in_directory = '<c-g>', -- 在当前目录下使用 grep 查找所有文件中的内容
+      replace_in_directory = false, -- 当下暂不使用该功能（依赖于 grug-far.nvim）
+      cycle_open_buffers = '<tab>', -- 快速跳转到当前打开的 buffer 对应文件
       copy_relative_path_to_selected_files = '<c-y>',
       send_to_quickfix_list = '<c-q>',
       change_working_directory = '<c-\\>',
+
+      open_file_in_vertical_split = '<C-v>',
+      open_file_in_horizontal_split = '<C-h>',
+      open_file_in_tab = 'T',
       open_and_pick_window = '<c-o>',
+    },
+    -- 使用自定义的文件打开命令，yazi 内置命令在我的设备上有问题
+    open_fn = function(path, method)
+      if method == 'vsplit' then
+        vim.cmd('vsplit ' .. vim.fn.fnameescape(path))
+      elseif method == 'hsplit' then
+        vim.cmd('split ' .. vim.fn.fnameescape(path))
+      elseif method == 'tab' then
+        vim.cmd('tabnew ' .. vim.fn.fnameescape(path))
+      else
+        vim.cmd('edit ' .. vim.fn.fnameescape(path))
+      end
+    end,
+
+    -- 悬浮窗边框
+    yazi_floating_window_border = 'rounded',
+
+    -- 一些 yazi 的命令拷贝文本到剪切板，这是 yazi 应该用于拷贝的缓冲区
+    -- 默认是 * - 系统剪切板
+    clipboard_register = '*',
+
+    hooks = {
+      -- if you want to execute a custom action when yazi has been opened,
+      -- you can define it here.
+      yazi_opened = function(preselected_path, yazi_buffer_id, config)
+        -- you can optionally modify the config for this specific yazi
+        -- invocation if you want to customize the behaviour
+      end,
+
+      -- when yazi was successfully closed
+      yazi_closed_successfully = function(chosen_file, config, state) end,
+
+      -- when yazi opened multiple files. The default is to send them to the
+      -- quickfix list, but if you want to change that, you can define it here
+      yazi_opened_multiple_files = function(chosen_files, config, state) end,
     },
   },
   -- 👇 if you use `open_for_directories=true`, this is recommended
