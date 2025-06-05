@@ -210,7 +210,14 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
-          cmd = { 'clangd', '--clang-tidy', '--header-insertion=never' },
+          cmd = {
+            'clangd',
+            '--clang-tidy',
+            '--header-insertion=never',
+            '--fallback-style=Google',
+            '--completion-style=detailed',
+            '--compile-commands-dir=.',
+          },
           -- 你也可以在这里加一些 clangd 额外参数，比如：
           -- cmd = { "clangd", "--clang-tidy", "--completion-style=detailed", "--header-insertion=never" },
 

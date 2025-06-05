@@ -33,12 +33,7 @@ return {
       -- Default segments (fold -> sign -> line number + separator), explained below
       segments = {
         -- { text = { '%C' }, click = 'v:lua.ScFa' },
-        {
-          text = { builtin.foldfunc, ' ' },
-          condition = { true, builtin.not_empty },
-          click = 'v:lua.ScFa',
-        },
-        { text = { '%s' }, click = 'v:lua.ScSa' },
+        { text = { ' ', '%s' }, click = 'v:lua.ScSa' },
         {
           text = { builtin.lnumfunc, ' ' },
           condition = { true, builtin.not_empty },

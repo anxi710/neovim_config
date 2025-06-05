@@ -1,6 +1,6 @@
 -- ~/.config/nvim/lua/custom/options.lua
 vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 20
+vim.opt.ttimeoutlen = 100
 
 -- 指定系统 python 路径
 vim.g.python3_host_prog = '/usr/bin/python3'
@@ -39,7 +39,6 @@ vim.g.lazygit_on_exit_callback = nil -- optional function callback when exiting 
 
 -- Folding
 -- foldminlines & foldnestmax
-vim.wo.foldenable = true
 -- 使用 nvim-ufo 来智能化处理 fold，因此不需要下面两行
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
