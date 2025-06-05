@@ -8,20 +8,20 @@
 
 ## 效果预览
 
-<img src='assets/dashboard.png' width=600/>
+<img src='assets/dashboard.png' width=400/>
 
 运行 `nvim` 命令可以进入上图所示界面，该页面是由 [snacks.nvim](https://github.com/folke/snacks.nvim) 插件提供的，可以进一步 customize，详情见官网。
 
-<img src='assets/open_in_dir.png' width=600/>
+<img src='assets/open_in_dir.png' width=400/>
 
 在文件夹中打开 neovim 时，则会进入上图所示页面，这是 [Yazi](https://yazi-rs.github.io/) 提供的文件管理窗口，显示样式由 Yazi 单独的 config 设置，比如图中的 title bar 是 Yazi 插件 [starship.yazi](https://github.com/Rolv-Apneseth/starship.yazi) 提供的，而这个插件又是使用 [starship](https://starship.rs/) 的 config 渲染。
 
-<img src='assets/open_file.png' width=600/>
+<img src='assets/open_file.png' width=400/>
 
 在文件中打开时，效果如上图。在这个界面可以进一步通过快捷键打开 [neo-tree](https://github.com/nvim-neo-tree/neo-tree.nvim) 和 [aerial](https://github.com/stevearc/aerial.nvim). 效果如下：
 
-<img src='assets/open_file_plus.png' width=800/>
+<img src='assets/open_file_plus.png' width=400/>
 
 分屏显示效果如下
 
-<img src='assets/split_screen.png' width=800/>
+<img src='assets/split_screen.png' width=400/>
