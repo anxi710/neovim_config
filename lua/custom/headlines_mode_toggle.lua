@@ -18,7 +18,12 @@ local function toggle_headlines_visibility(visible)
         -- 尝试调用 headlines 重新渲染接口，或者简单用 bufload 触发刷新
         vim.schedule(function()
           vim.api.nvim_buf_call(buf, function()
-            vim.cmd 'edit' -- 这里触发一下，或者可以调用 headlines 插件函数
+            local ok, headlines = pcall(require, 'headlines')
+            if ok and headlines.refresh then
+              vim.schedule(function()
+                headlines.refresh(buf)
+              end)
+            end
           end)
         end)
       else

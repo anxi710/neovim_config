@@ -36,13 +36,13 @@ return {
       -- set to 1, the nvim will auto close current preview window when changing
       -- from Markdown buffer to another buffer
       -- default: 1
-      vim.g.mkdp_auto_close = 1
+      vim.g.mkdp_auto_close = 0
 
       -- set to 1, Vim will refresh Markdown when saving the buffer or
       -- when leaving insert mode. Default 0 is auto-refresh Markdown as you edit or
       -- move the cursor
       -- default: 0
-      vim.g.mkdp_refresh_slow = 0
+      vim.g.mkdp_refresh_slow = 1
 
       -- set to 1, the MarkdownPreview command can be used for all files,
       -- by default it can be use in Markdown files only
@@ -121,7 +121,7 @@ return {
       vim.g.mkdp_page_title = '「${name}」'
 
       -- use a custom location for images
-      vim.g.mkdp_images_path = '/home/user/.markdown_images'
+      vim.g.mkdp_images_path = '.'
 
       -- recognized filetypes
       -- these filetypes will have MarkdownPreview... commands
